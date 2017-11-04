@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+	<ul class="list-group">
+	{{- $.Scratch.Set "lower_titles" (slice) -}}
+	{{- range $poster := sort $.Site.Data.posters.papers "title" "asc" -}}
+		{{- $.Scratch.Add "lower_titles" (lower $poster.title) -}}
+	{{- end -}}
+	{{- range $lower_title := sort ($.Scratch.Get "lower_titles") -}}
+		{{- range $poster := $.Site.Data.posters.papers -}}
+			{{- if eq $lower_title (lower $poster.title) -}}
+				<li class="list-group-item">
+					<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						<strong>{{ $poster.title }}</strong>
+					</div>
+					<div class="col-md-10 col-md-offset-1">
+						{{- range $author := $poster.authors }}{{ $.Scratch.Add "affil" (slice (print $author.name " <i>(" $author.affiliation ")</i>")) }}{{ end -}}
+						{{ delimit ($.Scratch.Get "affil") ", " }}
+						{{- $.Scratch.Set "affil" slice -}}
+					</div>
+					</div>
+				</li>
+			{{- end -}}
+		{{- end -}}
+	{{- end -}}
+	</ul>
+</div>

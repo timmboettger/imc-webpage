@@ -1,0 +1,4 @@
+<footer class="container-fluid page-footer" style="display: flex; align-items: center">
+  <div class="col-md-4 col-md-offset-4 text-center"><a href="https://github.com/timmboettger/imc-webpage"><img src="img/GitHub-Mark-32px.png" alt="GitHub"></a></div>
+  <div class="col-md-4 text-right">{{ if not (eq .Kind "404") }}Last modified: {{ .Lastmod.Format "Jan 02 2006" }}{{ end }}</div>
+</footer>

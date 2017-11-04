@@ -1,0 +1,57 @@
+{{ range $day := $.Site.Data.program.days }}
+<div class="panel panel-default">
+
+	<div class="panel-heading" role="tab" id="heading_{{ $day._id }}">
+		<h4 class="panel-title">
+			<!-- <a role="button" data-toggle="collapse" href="#xxcollapse_{{ $day._id }}" aria-expanded="false" aria-controls="collapse_{{ $day._id }}">{{ $day.title }}</a> -->
+			{{ $day.title }}
+		</h4>
+	</div>
+	
+	<ul class="list-group xxpanel-collapse xxcollapse in" id="collapse_{{ $day._id }}">
+	{{ range $timeslot := sort (where $.Site.Data.program.timeslots "day" $day._id) "weight" "asc" }}
+	{{ if eq $timeslot.type "session" }}
+	<li class="list-group-item panel-subheading-session">
+		<a role="button" data-toggle="collapse" href="#collapse_{{ $timeslot._id }}" aria-expanded="false" aria-controls="collapse_{{ $timeslot._id }}">{{ $timeslot.time_from }} - {{ $timeslot.time_to }} - {{ $timeslot.title }} <i>(Session Chair: {{ $timeslot.chair }})</i></a>
+	</li>
+	<ul class="list-group list-group-session panel-collapse collapse in" id="collapse_{{ $timeslot._id}}">
+	{{ range $paper := sort (where $.Site.Data.program.papers "timeslot" $timeslot._id) "weight" "asc" }}
+	<li class="list-group-item">
+	<div class="row">
+    	<div class="col-md-2 col-md-push-10 btn-group btn-group-vertical visible-md-block visible-lg-block" role="group">
+        	<button type="button" class="btn btn-default hidden-print" data-toggle="collapse" data-target="#collapse_{{ $paper._id }}" aria-expanded="false" aria-controls="collapse_{{ $paper._id }}">Abstract</button>
+        	<a role="button" class="btn btn-default hidden-print" href="papers/{{ $paper.pdf }}">Paper</a>
+        	{{ if $paper.slides }}<a role="button" class="btn btn-default hidden-print" href="slides/{{ $paper.slides }}">Slides</a>{{ else }}<a role="button" class="btn btn-default hidden-print disabled">Slides</a>{{ end }}
+    	</div>
+    	<div class="col-md-2 btn-group btn-group-justified visible-xs-block visible-sm-block" role="group">
+        	<a role="button" class="btn btn-default hidden-print" data-toggle="collapse" data-target="#collapse_{{ $paper._id }}" aria-expanded="false" aria-controls="collapse_{{ $paper._id }}">Abstract</a>
+        	<a role="button" class="btn btn-default hidden-print" href="papers/{{ $paper.pdf }}">Paper</a>
+        	{{ if $paper.slides }}<a role="button" class="btn btn-default hidden-print" href="slides/{{ $paper.slides }}">Slides</a>{{ else }}<a role="button" class="btn btn-default hidden-print disabled">Slides</a>{{ end }}
+    	</div>
+    	<div class="col-md-9 col-md-offset-1 col-md-pull-2">
+            <div style="display: flex; align-items: center"><strong>{{ ($paper.title) }}</strong>&nbsp;&nbsp;<span class="label label-primary">{{ $paper.type }}</span></div>
+            {{ range $author := $paper.authors }}{{ $.Scratch.Add "affil" (slice (print (htmlEscape $author.name) " <i>(" (htmlEscape $author.affiliation) ")</i>")) }}{{ end }}
+            <div>{{ delimit ($.Scratch.Get "affil") ", " }}</div>
+            {{ $.Scratch.Set "affil" slice }}
+        	<div class="collapse" id="collapse_{{ $paper._id }}">
+            	<strong>Abstract:</strong> {{ $paper.abstract }}
+        	</div>
+    	</div>
+	</div>
+	</li>		
+	{{ end }}
+	</ul>
+	{{ else if eq $timeslot.type "session_no_chair" }}
+	<li class="list-group-item panel-subheading-session">
+		{{ if $timeslot.page_url }}<a href="{{ $timeslot.page_url }}">{{ $timeslot.time_from }} - {{ $timeslot.time_to }} - {{ $timeslot.title }}</a>{{ else }}{{ $timeslot.time_from }} - {{ $timeslot.time_to }} - {{ $timeslot.title }}{{ end }}
+	</li>
+	{{ else }}
+	<li class="list-group-item panel-subheading-other">
+		{{ if $timeslot.page_url }}<a href="{{ $timeslot.page_url }}">{{ $timeslot.time_from }} - {{ $timeslot.time_to }} - {{ $timeslot.title }}</a>{{ else }}{{ $timeslot.time_from }} - {{ $timeslot.time_to }} - {{ $timeslot.title }}{{ end }}
+	</li>
+	{{ end }}
+	{{ end }}
+	</ul>
+			
+</div>
+{{ end }}

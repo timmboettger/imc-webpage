@@ -1,0 +1,21 @@
+baseurl = "https://conferences.sigcomm.org/imc/2017/"
+title = "ACM IMC 2017"
+languageCode = "en-gb"
+disableKinds=["RSS"]
+enableGitInfo = "True"
+googleAnalytics = "UA-88311505-1"
+
+[[menu.main]]
+    name = "Calls"
+    identifier = "cfp_menu"
+    weight = 10
+    
+[[menu.main]]
+    name = "Local Info"
+    identifier = "local_menu"
+    weight = 50
+
+[[menu.right]]
+    name = "Registration"
+    weight = 500
+    url = "http://eshop.qmul.ac.uk/conferences-and-events/conferences-events/conferences-events/acm-internet-measurement-conference-imc"
