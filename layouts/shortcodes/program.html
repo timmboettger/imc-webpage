@@ -18,25 +18,29 @@
 	{{ range $paper := sort (where $.Site.Data.program.papers "timeslot" $timeslot._id) "weight" "asc" }}
 	<li class="list-group-item">
 	<div class="row">
-    	<div class="col-md-2 col-md-push-10 btn-group btn-group-vertical visible-md-block visible-lg-block" role="group">
-        	<button type="button" class="btn btn-default hidden-print" data-toggle="collapse" data-target="#collapse_{{ $paper._id }}" aria-expanded="false" aria-controls="collapse_{{ $paper._id }}">Abstract</button>
-        	<a role="button" class="btn btn-default hidden-print" href="papers/{{ $paper.pdf }}">Paper</a>
-        	{{ if $paper.slides }}<a role="button" class="btn btn-default hidden-print" href="slides/{{ $paper.slides }}">Slides</a>{{ else }}<a role="button" class="btn btn-default hidden-print disabled">Slides</a>{{ end }}
-    	</div>
-    	<div class="col-md-2 btn-group btn-group-justified visible-xs-block visible-sm-block" role="group">
-        	<a role="button" class="btn btn-default hidden-print" data-toggle="collapse" data-target="#collapse_{{ $paper._id }}" aria-expanded="false" aria-controls="collapse_{{ $paper._id }}">Abstract</a>
-        	<a role="button" class="btn btn-default hidden-print" href="papers/{{ $paper.pdf }}">Paper</a>
-        	{{ if $paper.slides }}<a role="button" class="btn btn-default hidden-print" href="slides/{{ $paper.slides }}">Slides</a>{{ else }}<a role="button" class="btn btn-default hidden-print disabled">Slides</a>{{ end }}
-    	</div>
-    	<div class="col-md-9 col-md-offset-1 col-md-pull-2">
-            <div style="display: flex; align-items: center"><strong>{{ ($paper.title) }}</strong>&nbsp;&nbsp;<span class="label label-primary">{{ $paper.type }}</span></div>
-            {{ range $author := $paper.authors }}{{ $.Scratch.Add "affil" (slice (print (htmlEscape $author.name) " <i>(" (htmlEscape $author.affiliation) ")</i>")) }}{{ end }}
-            <div>{{ delimit ($.Scratch.Get "affil") ", " }}</div>
-            {{ $.Scratch.Set "affil" slice }}
-        	<div class="collapse" id="collapse_{{ $paper._id }}">
-            	<strong>Abstract:</strong> {{ $paper.abstract }}
-        	</div>
-    	</div>
+		<div class="col-md-10 col-md-offset-1">
+			<div style="display: flex; align-items: center"><strong>{{ ($paper.title) }}</strong>&nbsp;&nbsp;<span class="label label-primary">{{ $paper.type }}</span></div>
+			{{ range $author := $paper.authors }}{{ $.Scratch.Add "affil" (slice (print (htmlEscape $author.name) " <i>(" (htmlEscape $author.affiliation) ")</i>")) }}{{ end }}
+			<div>{{ delimit ($.Scratch.Get "affil") ", " }}</div>
+			{{ $.Scratch.Set "affil" slice }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<div class="btn-group" role="group">
+				<a role="button" class="btn btn-default hidden-print" data-toggle="collapse" data-target="#collapse_{{ $paper._id }}" aria-expanded="false" aria-controls="collapse_{{ $paper._id }}">Abstract</a>
+				<a role="button" class="btn btn-default hidden-print" href="papers/{{ $paper.pdf }}">Paper</a>
+				{{ if $paper.slides }}<a role="button" class="btn btn-default hidden-print" href="slides/{{ $paper.slides }}">Slides</a>{{ else }}<a role="button" class="btn btn-default hidden-print disabled">Slides</a>{{ end }}
+				{{ if $paper.artifact }}<a role="button" class="btn btn-default hidden-print" href="{{ $paper.artifact }}" target="_blank" rel="noopener">Artifact</a>{{ else }}<a role="button" class="btn btn-default hidden-print disabled">Artifact</a>{{ end }}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<div class="collapse" id="collapse_{{ $paper._id }}">
+                <strong>Abstract:</strong> {{ $paper.abstract }}
+            </div>
+		</div>
 	</div>
 	</li>		
 	{{ end }}
