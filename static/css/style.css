@@ -54,3 +54,34 @@ span.label {
 .list-group-session {
 	margin-bottom: 0;
 }
+
+/* 
+   btn-matrix for program page 
+   inspired by: https://stackoverflow.com/a/38267914
+*/
+.btn-matrix-2 > .btn:nth-child(2n+3) {
+  clear: left;
+  margin-left: 0;
+}
+.btn-matrix-2 > .btn:nth-child(n+3) {
+  margin-top: -1px;
+}
+.btn-matrix-2 > .btn:first-child {
+  border-bottom-left-radius: 0;
+}
+.btn-matrix-2 > .btn:nth-child(2) {
+  border-top-right-radius: 4px !important;
+}
+.btn-matrix-2 > .btn:nth-last-child(2) {
+  border-bottom-left-radius: 4px !important;
+}
+.btn-matrix-2 > .btn:last-child {
+  border-top-right-radius: 0;
+}
+.btn-matrix-2 > .btn {
+  width: 50%;
+}
+.btn-matrix-2 {
+  width: 100%;
+}
+

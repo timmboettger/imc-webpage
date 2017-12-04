@@ -18,16 +18,14 @@
 	{{ range $paper := sort (where $.Site.Data.program.papers "timeslot" $timeslot._id) "weight" "asc" }}
 	<li class="list-group-item">
 	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-7 col-md-offset-1">
 			<div style="display: flex; align-items: center"><strong>{{ ($paper.title) }}</strong>&nbsp;&nbsp;<span class="label label-primary">{{ $paper.type }}</span></div>
 			{{ range $author := $paper.authors }}{{ $.Scratch.Add "affil" (slice (print (htmlEscape $author.name) " <i>(" (htmlEscape $author.affiliation) ")</i>")) }}{{ end }}
 			<div>{{ delimit ($.Scratch.Get "affil") ", " }}</div>
 			{{ $.Scratch.Set "affil" slice }}
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
-			<div class="btn-group" role="group">
+		<div class="col-md-3 col-md-offset-1">
+			<div class="btn-group btn-matrix-2" role="group">
 				<a role="button" class="btn btn-default hidden-print" data-toggle="collapse" data-target="#collapse_{{ $paper._id }}" aria-expanded="false" aria-controls="collapse_{{ $paper._id }}">Abstract</a>
 				<a role="button" class="btn btn-default hidden-print" href="papers/{{ $paper.pdf }}">Paper</a>
 				{{ if $paper.slides }}<a role="button" class="btn btn-default hidden-print" href="slides/{{ $paper.slides }}">Slides</a>{{ else }}<a role="button" class="btn btn-default hidden-print disabled">Slides</a>{{ end }}
@@ -36,7 +34,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-7 col-md-offset-1">
 			<div class="collapse" id="collapse_{{ $paper._id }}">
                 <strong>Abstract:</strong> {{ $paper.abstract }}
             </div>
