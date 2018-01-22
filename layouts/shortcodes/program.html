@@ -28,7 +28,7 @@
 			<div class="btn-group btn-matrix-2" role="group">
 				<a role="button" class="btn btn-default hidden-print" data-toggle="collapse" data-target="#collapse_{{ $paper._id }}" aria-expanded="false" aria-controls="collapse_{{ $paper._id }}">Abstract</a>
 				<a role="button" class="btn btn-default hidden-print" href="papers/{{ $paper.pdf }}">Paper</a>
-				{{ if $paper.slides }}<a role="button" class="btn btn-default hidden-print" href="slides/{{ $paper.slides }}">Slides</a>{{ else }}<a role="button" class="btn btn-default hidden-print disabled">Slides</a>{{ end }}
+				{{ if $paper.slides }}<a role="button" class="btn btn-default hidden-print" href="slides/{{ (replace $paper.slides "#" "%23") }}">Slides</a>{{ else }}<a role="button" class="btn btn-default hidden-print disabled">Slides</a>{{ end }}
 				{{ if $paper.artifact }}<a role="button" class="btn btn-default hidden-print" href="{{ $paper.artifact }}" target="_blank" rel="noopener">Artifact</a>{{ else }}<a role="button" class="btn btn-default hidden-print disabled">Artifact</a>{{ end }}
 			</div>
 		</div>
