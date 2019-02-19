@@ -64,7 +64,6 @@ def process_json(json_input, json_output, input_type):
 
 		papers.append(paper_metadata)
 
-	#if input_type == 'papers':
 	# load exisiting program and update paper info
 	# program json file has to exist
 	with open(json_output) as f:
